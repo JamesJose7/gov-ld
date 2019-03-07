@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 public class CkanExtractor {
 
-    public static final int MAX_SIZE = 100;
+    public static final int MAX_SIZE = 1;
     private Gson mGson;
     private MysqlDatabase mDatabase;
     private SemanticCreator mSemanticCreator;
@@ -25,7 +26,7 @@ public class CkanExtractor {
     private String mBaseUrl;
     private String mListPackageDetailsUrl;
 
-    public CkanExtractor() {
+    public CkanExtractor() throws FileNotFoundException {
         mDatabase = new MysqlDatabase();
         mSemanticCreator = new SemanticCreator();
         mGson = new Gson();
@@ -108,6 +109,11 @@ public class CkanExtractor {
                 .map(e -> e.getValue().toString())
                 .findFirst();
 
+        Optional description = resultJson.getJSONObject("description").toMap().entrySet().stream()
+                .filter(e -> e.getKey().equals("en"))
+                .map(e -> e.getValue().toString())
+                .findFirst();
+
         // Transform Groups and Tags from org.json to gson.json
         JSONArray groups = resultJson.getJSONArray("groups");
         JsonArray transformedGroups = orgToGson(groups);
@@ -116,7 +122,7 @@ public class CkanExtractor {
         JsonArray transformedTags = orgToGson(tags);
 
         return new CkanPackage.CkanPackageBuilder(resultJson.optString("id"))
-                .withTitle(title.isPresent() ? title.get().toString() : resultJson.getJSONObject("title").toMap().values().stream().findFirst().orElse("no-title").toString())
+                .withTitle(title.isPresent() ? title.get().toString() : resultJson.getJSONObject("title").toMap().values().stream().findFirst().orElse("").toString())
                 .withName(resultJson.optString("name"))
                 .withLicense(resultJson.optString("license_title"))
                 .withMetadataCreated(resultJson.optString("metadata_created"))
@@ -126,7 +132,7 @@ public class CkanExtractor {
                 .withType(resultJson.optString("type"))
                 .withIssued(resultJson.optString("issued"))
                 .withVersion(resultJson.optString("version"))
-                .withDescription(resultJson.optString("description"))
+                .withDescription(description.isPresent() ? description.get().toString() : resultJson.getJSONObject("description").toMap().values().stream().findFirst().orElse("").toString())
                 .isPrivate(resultJson.optBoolean("private"))
                 .withState(resultJson.optString("state"))
                 .withModified(resultJson.optString("modified"))
