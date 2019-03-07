@@ -1,7 +1,6 @@
 package com.jeeps.ckan_extractor.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import com.jeeps.ckan_extractor.config.MysqlDatabase;
 import com.jeeps.ckan_extractor.model.CkanContent;
 import com.jeeps.ckan_extractor.model.CkanPackage;
@@ -21,12 +20,14 @@ public class CkanExtractor {
     public static final int MAX_SIZE = 100;
     private Gson mGson;
     private MysqlDatabase mDatabase;
+    private SemanticCreator mSemanticCreator;
     private HttpService mHttpService;
     private String mBaseUrl;
     private String mListPackageDetailsUrl;
 
     public CkanExtractor() {
         mDatabase = new MysqlDatabase();
+        mSemanticCreator = new SemanticCreator();
         mGson = new Gson();
         mHttpService = new HttpService();
     }
@@ -95,7 +96,8 @@ public class CkanExtractor {
             // Set origin URL
             aPackage.setOriginUrl(mBaseUrl);
             System.out.println(aPackage);
-            mDatabase.savebuilPackage(aPackage, resourcesCkan);
+            mSemanticCreator.generateTriples(aPackage, resourcesCkan);
+            mDatabase.savePackage(aPackage, resourcesCkan);
         } catch (JSONException e) {}
     }
 
@@ -106,6 +108,13 @@ public class CkanExtractor {
                 .map(e -> e.getValue().toString())
                 .findFirst();
 
+        // Transform Groups and Tags from org.json to gson.json
+        JSONArray groups = resultJson.getJSONArray("groups");
+        JsonArray transformedGroups = orgToGson(groups);
+
+        JSONArray tags = resultJson.getJSONArray("tags");
+        JsonArray transformedTags = orgToGson(tags);
+
         return new CkanPackage.CkanPackageBuilder(resultJson.optString("id"))
                 .withTitle(title.isPresent() ? title.get().toString() : resultJson.getJSONObject("title").toMap().values().stream().findFirst().orElse("no-title").toString())
                 .withName(resultJson.optString("name"))
@@ -115,7 +124,26 @@ public class CkanExtractor {
                 .withAuthor(resultJson.optString("author"))
                 .withNotes(resultJson.optString("notes"))
                 .withType(resultJson.optString("type"))
+                .withIssued(resultJson.optString("issued"))
+                .withVersion(resultJson.optString("version"))
+                .withDescription(resultJson.optString("description"))
+                .isPrivate(resultJson.optBoolean("private"))
+                .withState(resultJson.optString("state"))
+                .withModified(resultJson.optString("modified"))
+                .withGropus(transformedGroups)
+                .withTags(transformedTags)
                 .build();
+    }
+
+    private JsonArray orgToGson(JSONArray groups) {
+        JsonArray transformedGson = new JsonArray();
+        for (int i = 0; i < groups.length(); i++) {
+            String groupName = groups.getJSONObject(i).optJSONObject("display_name").optString("en");
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("display_name", groupName);
+            transformedGson.add(jsonObject);
+        }
+        return transformedGson;
     }
 
     private CkanResource[] buildComplexResources(JSONArray packageResources) {
