@@ -18,6 +18,7 @@ import java.util.Optional;
 
 public class CkanExtractor {
 
+    public static final int MAX_SIZE = 100;
     private Gson mGson;
     private MysqlDatabase mDatabase;
     private HttpService mHttpService;
@@ -48,13 +49,17 @@ public class CkanExtractor {
 
     private void extractDatasets(String json) {
         List<String> ckanDatasets = parseCkanContent(json);
-        ckanDatasets.parallelStream().forEach(dataset -> mHttpService.
+        ckanDatasets.parallelStream()
+                .limit(MAX_SIZE)
+                .forEach(dataset -> mHttpService.
                         sendRequest(this::extractDatasetDetails, (mListPackageDetailsUrl + dataset)));
     }
 
     private void extractDataSetsByPost(String json) {
         List<String> ckanDatasets = parseCkanContent(json);
-        ckanDatasets.parallelStream().forEach(dataset -> mHttpService.
+        ckanDatasets.parallelStream()
+                .limit(MAX_SIZE)
+                .forEach(dataset -> mHttpService.
                 sendPostRequest(this::extractDatasetDetails, (mListPackageDetailsUrl), String.format("{\"id\": \"%s\"}", dataset)));
     }
 
@@ -90,16 +95,19 @@ public class CkanExtractor {
             // Set origin URL
             aPackage.setOriginUrl(mBaseUrl);
             System.out.println(aPackage);
-            mDatabase.savePackage(aPackage, resourcesCkan);
+            mDatabase.savebuilPackage(aPackage, resourcesCkan);
         } catch (JSONException e) {}
     }
 
     private CkanPackage buildComplexPackage(JSONObject resultJson) {
         // Get complex attributes
-        Optional title = resultJson.getJSONObject("title").toMap().values().stream().findFirst();
+        Optional title = resultJson.getJSONObject("title").toMap().entrySet().stream()
+                .filter(e -> e.getKey().equals("en"))
+                .map(e -> e.getValue().toString())
+                .findFirst();
 
         return new CkanPackage.CkanPackageBuilder(resultJson.optString("id"))
-                .withTitle(title.isPresent() ? title.get().toString() : "")
+                .withTitle(title.isPresent() ? title.get().toString() : resultJson.getJSONObject("title").toMap().values().stream().findFirst().orElse("no-title").toString())
                 .withName(resultJson.optString("name"))
                 .withLicense(resultJson.optString("license_title"))
                 .withMetadataCreated(resultJson.optString("metadata_created"))
@@ -115,8 +123,12 @@ public class CkanExtractor {
         for (int i = 0; i < packageResources.length(); i++) {
             JSONObject resourceJson = packageResources.getJSONObject(i);
             // Get complex attributes
-            Optional description = resourceJson.getJSONObject("description").toMap().values().stream().findFirst();
-            Optional name = resourceJson.getJSONObject("name").toMap().values().stream().findFirst();
+            Optional description = resourceJson.getJSONObject("name").toMap().entrySet().stream()
+                    .filter(e -> e.getKey().equals("en"))
+                    .findFirst();
+            Optional name = resourceJson.getJSONObject("name").toMap().entrySet().stream()
+                    .filter(e -> e.getKey().equals("en"))
+                    .findFirst();
 
             ckanResources.add(
                     new CkanResource.CkanResourceBuilder(resourceJson.optString("id"),
