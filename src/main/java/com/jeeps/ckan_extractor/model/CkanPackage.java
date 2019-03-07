@@ -1,6 +1,7 @@
 package com.jeeps.ckan_extractor.model;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 public class CkanPackage {
@@ -26,6 +27,7 @@ public class CkanPackage {
     // complex
     private JsonArray groups;
     private JsonArray tags;
+    private JsonObject organization;
 
 
     public CkanPackage(CkanPackageBuilder builder) {
@@ -47,6 +49,7 @@ public class CkanPackage {
         this.modified = builder.modified;
         this.groups = builder.groups;
         this.tags = builder.tags;
+        this.organization = builder.organization;
     }
 
     public String getId() {
@@ -193,6 +196,14 @@ public class CkanPackage {
         this.tags = tags;
     }
 
+    public JsonObject getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(JsonObject organization) {
+        this.organization = organization;
+    }
+
     @Override
     public String toString() {
         return String.format("License: %s\n" +
@@ -221,6 +232,7 @@ public class CkanPackage {
         private String modified;
         private JsonArray groups;
         private JsonArray tags;
+        private JsonObject organization;
 
         public CkanPackageBuilder(String id) {
             this.id = id;
@@ -308,6 +320,11 @@ public class CkanPackage {
 
         public CkanPackageBuilder withTags(JsonArray tags) {
             this.tags = tags;
+            return this;
+        }
+
+        public CkanPackageBuilder withOrganization(JsonObject organization) {
+            this.organization = organization;
             return this;
         }
 

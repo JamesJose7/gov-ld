@@ -1,6 +1,7 @@
 package com.jeeps.ckan_extractor;
 
 import com.jeeps.ckan_extractor.controller.CkanExtractor;
+import com.jeeps.ckan_extractor.controller.SemanticCreator;
 
 import java.io.FileNotFoundException;
 import java.time.Duration;
@@ -10,6 +11,9 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Instant start = Instant.now();
         CkanExtractor ckanExtractor = new CkanExtractor();
+        // Set constants for extraction
+        SemanticCreator.CURRENT_COUNTRY = "Switzerland";
+        SemanticCreator.CURRENT_GOVERNMENT = "Switzerland government";
         //ckanExtractor.extract("http://ambar.utpl.edu.ec/api/action/");
 //        chowkanExtractor.extract("http://data.europa.eu/euodp/data/api/action/");
 //        ckanExtractor.extractByPost("http://data.europa.eu/euodp/data/api/3/action/");

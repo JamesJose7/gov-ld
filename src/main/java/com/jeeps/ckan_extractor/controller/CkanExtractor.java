@@ -121,6 +121,12 @@ public class CkanExtractor {
         JSONArray tags = resultJson.getJSONArray("tags");
         JsonArray transformedTags = orgToGson(tags);
 
+        JSONObject organization = resultJson.getJSONObject("organization");
+        JsonObject transformedOrg = new JsonObject();
+        transformedOrg.addProperty("title", organization.getJSONObject("title").getString("en"));
+        transformedOrg.addProperty("political_level", organization.getString("political_level"));
+        transformedOrg.addProperty("state", organization.getString("state"));
+
         return new CkanPackage.CkanPackageBuilder(resultJson.optString("id"))
                 .withTitle(title.isPresent() ? title.get().toString() : resultJson.getJSONObject("title").toMap().values().stream().findFirst().orElse("").toString())
                 .withName(resultJson.optString("name"))
@@ -138,6 +144,7 @@ public class CkanExtractor {
                 .withModified(resultJson.optString("modified"))
                 .withGropus(transformedGroups)
                 .withTags(transformedTags)
+                .withOrganization(transformedOrg)
                 .build();
     }
 
@@ -157,11 +164,13 @@ public class CkanExtractor {
         for (int i = 0; i < packageResources.length(); i++) {
             JSONObject resourceJson = packageResources.getJSONObject(i);
             // Get complex attributes
-            Optional description = resourceJson.getJSONObject("name").toMap().entrySet().stream()
-                    .filter(e -> e.getKey().equals("en"))
-                    .findFirst();
             Optional name = resourceJson.getJSONObject("name").toMap().entrySet().stream()
                     .filter(e -> e.getKey().equals("en"))
+                    .map(e -> e.getValue().toString())
+                    .findFirst();
+            Optional description = resourceJson.getJSONObject("description").toMap().entrySet().stream()
+                    .filter(e -> e.getKey().equals("en"))
+                    .map(e -> e.getValue().toString())
                     .findFirst();
 
             ckanResources.add(
