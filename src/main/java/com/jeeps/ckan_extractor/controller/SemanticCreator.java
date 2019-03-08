@@ -160,7 +160,9 @@ public class SemanticCreator {
                     dataset.addProperty(DCAT.distribution, distribution);
                     catalog.addProperty(DCAT.dataset, dataset);
                 });
+    }
 
+    public void writeRdfFile() {
         // Write model to file
         RDFWriter writer = mModel.getWriter("RDF/XML");
         writer.write(mModel, os,  "");

@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class CkanExtractor {
 
-    public static final int MAX_SIZE = 1;
+    public static final int MAX_SIZE = 5;
     private Gson mGson;
     private MysqlDatabase mDatabase;
     private SemanticCreator mSemanticCreator;
@@ -55,6 +55,7 @@ public class CkanExtractor {
                 .limit(MAX_SIZE)
                 .forEach(dataset -> mHttpService.
                         sendRequest(this::extractDatasetDetails, (mListPackageDetailsUrl + dataset)));
+        mSemanticCreator.writeRdfFile();
     }
 
     private void extractDataSetsByPost(String json) {
@@ -63,6 +64,7 @@ public class CkanExtractor {
                 .limit(MAX_SIZE)
                 .forEach(dataset -> mHttpService.
                 sendPostRequest(this::extractDatasetDetails, (mListPackageDetailsUrl), String.format("{\"id\": \"%s\"}", dataset)));
+        mSemanticCreator.writeRdfFile();
     }
 
     private List<String> parseCkanContent(String json) {
