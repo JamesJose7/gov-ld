@@ -132,8 +132,33 @@ public class SemanticCreator {
         // Add resources
         Arrays.stream(resourcesCkan)
                 .forEach(resource -> {
-                    catalog.addProperty(DCAT.dataset, mModel.createResource(DATA_PREFIX + urlify(resource.getName()))
-                            .addProperty(RDF.type, GVLD.Dataset));
+                    // Dataset
+                    Resource dataset = mModel.createResource(DATA_PREFIX + urlify(resource.getName()))
+                            .addProperty(RDF.type, GVLD.Dataset)
+                            .addProperty(DCTerms.title, resource.getName());
+                    if (exists(resource.getLicense()))
+                        dataset.addProperty(GVLD.license, resource.getLicense());
+                    if (exists(resource.getDescription()))
+                        dataset.addProperty(DCTerms.description, resource.getDescription());
+                    if (exists(resource.getCreated()))
+                        dataset.addProperty(DCTerms.issued, resource.getCreated());
+                    if (exists(resource.getModified()))
+                        dataset.addProperty(DCTerms.modified, resource.getModified());
+                    if (exists(resource.getState()))
+                        dataset.addProperty(GVLD.status, resource.getState());
+                    if (exists(resource.getFormat()))
+                        dataset.addProperty(GVLD.mediaType, resource.getFormat());
+
+                    // Distribution
+                    Resource distribution = mModel.createResource(DATA_PREFIX + "dist_" + urlify(resource.getName()))
+                            .addProperty(RDF.type, DCAT.Distribution)
+                            .addProperty(DCAT.downloadURL, resource.getUrl());
+                    if (exists(resource.getByteSize()))
+                        distribution.addProperty(DCAT.byteSize, resource.getByteSize());
+
+                    // Add relations
+                    dataset.addProperty(DCAT.distribution, distribution);
+                    catalog.addProperty(DCAT.dataset, dataset);
                 });
 
         // Write model to file

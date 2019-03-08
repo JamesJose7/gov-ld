@@ -181,6 +181,9 @@ public class CkanExtractor {
                             .withFormat(resourceJson.optString("format"))
                             .withCreated(resourceJson.optString("created"))
                             .withLastModified(resourceJson.optString("last_modified"))
+                            .withLastModified(resourceJson.optString("modified"))
+                            .withLastModified(resourceJson.optString("state"))
+                            .withLastModified(resourceJson.optString("license"))
                             .withUrl(resourceJson.optString("url"))
                             .build());
         }
