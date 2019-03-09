@@ -1,7 +1,7 @@
-package com.jeeps.ckan_extractor.config;
+package com.jeeps.gov_ld.config;
 
-import com.jeeps.ckan_extractor.model.CkanPackage;
-import com.jeeps.ckan_extractor.model.CkanResource;
+import com.jeeps.gov_ld.model.CkanPackage;
+import com.jeeps.gov_ld.model.CkanResource;
 
 import java.sql.*;
 import java.util.*;

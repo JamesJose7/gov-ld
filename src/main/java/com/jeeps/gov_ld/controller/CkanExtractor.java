@@ -1,11 +1,11 @@
-package com.jeeps.ckan_extractor.controller;
+package com.jeeps.gov_ld.controller;
 
 import com.google.gson.*;
-import com.jeeps.ckan_extractor.config.MysqlDatabase;
-import com.jeeps.ckan_extractor.model.CkanContent;
-import com.jeeps.ckan_extractor.model.CkanPackage;
-import com.jeeps.ckan_extractor.model.CkanResource;
-import com.jeeps.ckan_extractor.service.HttpService;
+import com.jeeps.gov_ld.config.MysqlDatabase;
+import com.jeeps.gov_ld.model.CkanContent;
+import com.jeeps.gov_ld.model.CkanPackage;
+import com.jeeps.gov_ld.model.CkanResource;
+import com.jeeps.gov_ld.service.HttpService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class CkanExtractor {
 
-    public static final int MAX_SIZE = 5;
+    public static final int MAX_SIZE = 90;
     private Gson mGson;
     private MysqlDatabase mDatabase;
     private SemanticCreator mSemanticCreator;

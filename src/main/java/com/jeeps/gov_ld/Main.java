@@ -1,7 +1,7 @@
-package com.jeeps.ckan_extractor;
+package com.jeeps.gov_ld;
 
-import com.jeeps.ckan_extractor.controller.CkanExtractor;
-import com.jeeps.ckan_extractor.controller.SemanticCreator;
+import com.jeeps.gov_ld.controller.CkanExtractor;
+import com.jeeps.gov_ld.controller.SemanticCreator;
 
 import java.io.FileNotFoundException;
 import java.time.Duration;

@@ -1,4 +1,4 @@
-package com.jeeps.ckan_extractor.service;
+package com.jeeps.gov_ld.service;
 
 import javax.net.ssl.SSLContext;
 import java.net.URI;

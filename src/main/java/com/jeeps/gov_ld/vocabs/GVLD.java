@@ -1,4 +1,4 @@
-package com.jeeps.ckan_extractor.vocabs;
+package com.jeeps.gov_ld.vocabs;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;

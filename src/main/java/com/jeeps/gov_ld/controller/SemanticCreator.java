@@ -1,8 +1,8 @@
-package com.jeeps.ckan_extractor.controller;
+package com.jeeps.gov_ld.controller;
 
-import com.jeeps.ckan_extractor.model.CkanPackage;
-import com.jeeps.ckan_extractor.model.CkanResource;
-import com.jeeps.ckan_extractor.vocabs.GVLD;
+import com.jeeps.gov_ld.model.CkanPackage;
+import com.jeeps.gov_ld.model.CkanResource;
+import com.jeeps.gov_ld.vocabs.GVLD;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCAT;

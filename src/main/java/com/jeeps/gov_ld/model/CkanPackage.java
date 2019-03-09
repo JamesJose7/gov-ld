@@ -1,4 +1,4 @@
-package com.jeeps.ckan_extractor.model;
+package com.jeeps.gov_ld.model;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

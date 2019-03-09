@@ -1,4 +1,4 @@
-package com.jeeps.ckan_extractor.model;
+package com.jeeps.gov_ld.model;
 
 public class CkanContent {
     private String success;
