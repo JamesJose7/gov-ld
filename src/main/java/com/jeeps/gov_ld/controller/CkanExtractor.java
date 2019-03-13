@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class CkanExtractor {
 
-    public static final int MAX_SIZE = 90;
+    public static final int MAX_SIZE = 2;
     private Gson mGson;
     private MysqlDatabase mDatabase;
     private SemanticCreator mSemanticCreator;
@@ -27,7 +27,7 @@ public class CkanExtractor {
     private String mListPackageDetailsUrl;
 
     public CkanExtractor() throws FileNotFoundException {
-        mDatabase = new MysqlDatabase();
+//        mDatabase = new MysqlDatabase();
         mSemanticCreator = new SemanticCreator();
         mGson = new Gson();
         mHttpService = new HttpService();
@@ -100,7 +100,7 @@ public class CkanExtractor {
             aPackage.setOriginUrl(mBaseUrl);
             System.out.println(aPackage);
             mSemanticCreator.generateTriples(aPackage, resourcesCkan);
-            mDatabase.savePackage(aPackage, resourcesCkan);
+            //mDatabase.savePackage(aPackage, resourcesCkan);
         } catch (JSONException e) {}
     }
 

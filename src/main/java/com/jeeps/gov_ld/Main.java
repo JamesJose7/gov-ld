@@ -28,8 +28,5 @@ public class Main {
         System.out.printf("Elapsed time:\n" +
                 "millis: %d\n" +
                 "seconds: %d\n", timeElapsed, (timeElapsed / 1000));
-
-//        SemanticCreator semanticCreator = new SemanticCreator();
-//        semanticCreator.convertToDcat();
     }
 }

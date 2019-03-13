@@ -3,7 +3,10 @@ package com.jeeps.gov_ld.controller;
 import com.jeeps.gov_ld.model.CkanPackage;
 import com.jeeps.gov_ld.model.CkanResource;
 import com.jeeps.gov_ld.vocabs.GVLD;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFWriter;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCAT;
 import org.apache.jena.vocabulary.DCTerms;
@@ -22,10 +25,12 @@ public class SemanticCreator {
 
     public static String CURRENT_GOVERNMENT;
     public static String CURRENT_COUNTRY;
-    private Property mDboCountryP;
-    private Resource mDboCountryC;
+    private Model mDboModel;
+    private Model mDbrModel;
     private String mDbo;
     private String mDbr;
+    private String mGvld;
+    private Model mGvldModel;
 
     public SemanticCreator() throws FileNotFoundException {
         // Create model
@@ -61,12 +66,18 @@ public class SemanticCreator {
         mDbr = "http://dbpedia.org/resource/";
         mModel.setNsPrefix("dbo", mDbo);
         mModel.setNsPrefix("dbr", mDbr);
-        mDboCountryP = ResourceFactory.createProperty(mDbo + "country");
-        mDboCountryC = ResourceFactory.createResource(mDbo + "Country");
+
+        // Modelo DBO
+        mDboModel = ModelFactory.createDefaultModel();
+        mDboModel.read(mDbo) ;
+        // Modelo DBR
+        mDbrModel = ModelFactory.createDefaultModel();
+        mDbrModel.read(mDbr) ;
 
         // Our Ontology prefix
-        String vocabPrefix = GVLD.getURI();
-        mModel.setNsPrefix("gvld",vocabPrefix);
+        new GVLD();
+        mGvld = GVLD.getURI();
+        mModel.setNsPrefix("gvld", mGvld);
     }
 
     public void generateTriples(CkanPackage aPackage, CkanResource[] resourcesCkan) {
@@ -97,8 +108,8 @@ public class SemanticCreator {
         // Add Government
         catalog.addProperty(GVLD.isPartOf, mModel.createResource(DATA_PREFIX + urlify(CURRENT_GOVERNMENT))
                 .addProperty(RDF.type, GVLD.Government)
-                .addProperty(mDboCountryP, mModel.createResource(mDbr + CURRENT_COUNTRY)
-                        .addProperty(RDF.type, mDboCountryC.getURI())));
+                .addProperty(mDboModel.getProperty(mDbo + "country"), mDbrModel.getResource(mDbr + CURRENT_COUNTRY)
+                        .addProperty(RDF.type, mDbrModel.getResource(mDbr + "Country"))));
 
         // Add Groups
         aPackage.getGroups().forEach(tag -> {

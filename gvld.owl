@@ -1,0 +1,416 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.government-linked-data.org/"
+     xml:base="http://www.government-linked-data.org/"
+     xmlns:dbo="http://dbpedia.org/ontology/"
+     xmlns:dct="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:dcat="http://www.w3.org/ns/dcat#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+    <owl:Ontology rdf:about="http://www.government-linked-data.org/"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#Resource -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/description">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Distribution"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/issued -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/issued">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Distribution"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/modified -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/modified">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/publisher -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/publisher">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/title">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Distribution"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/description -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/description">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Group"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/group -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/group">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Catalog"/>
+        <rdfs:range rdf:resource="http://www.government-linked-data.org/Group"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/isPrivate -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/isPrivate">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Catalog"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/license -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/license">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Catalog"/>
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Dataset"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/mediaType -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/mediaType">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Dataset"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/organization -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/organization">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Catalog"/>
+        <rdfs:range rdf:resource="http://www.government-linked-data.org/Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/politicalLevel -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/politicalLevel">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Organization"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/status -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/status">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Catalog"/>
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Dataset"/>
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Organization"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/tag -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/tag">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Catalog"/>
+        <rdfs:range rdf:resource="http://www.government-linked-data.org/Tag"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/title -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/title">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Group"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.government-linked-data.org/version -->
+
+    <owl:ObjectProperty rdf:about="http://www.government-linked-data.org/version">
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Catalog"/>
+        <rdfs:domain rdf:resource="http://www.government-linked-data.org/Dataset"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#byteSize -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/dcat#byteSize">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Distribution"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+            </owl:Restriction>
+        </rdfs:range>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#dataset -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/dcat#dataset">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#distribution -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/dcat#distribution">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/dcat#Distribution"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#downloadURL -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/dcat#downloadURL">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Distribution"/>
+        <rdfs:range>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+            </owl:Restriction>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://dbpedia.org/ontology/Country -->
+
+    <owl:Class rdf:about="http://dbpedia.org/ontology/Country"/>
+    
+
+
+    <!-- http://www.government-linked-data.org/Catalog -->
+
+    <owl:Class rdf:about="http://www.government-linked-data.org/Catalog">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.government-linked-data.org/Dataset -->
+
+    <owl:Class rdf:about="http://www.government-linked-data.org/Dataset">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.government-linked-data.org/Government -->
+
+    <owl:Class rdf:about="http://www.government-linked-data.org/Government">
+        <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.government-linked-data.org/Group -->
+
+    <owl:Class rdf:about="http://www.government-linked-data.org/Group"/>
+    
+
+
+    <!-- http://www.government-linked-data.org/Organization -->
+
+    <owl:Class rdf:about="http://www.government-linked-data.org/Organization">
+        <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.government-linked-data.org/Tag -->
+
+    <owl:Class rdf:about="http://www.government-linked-data.org/Tag">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#Concept -->
+
+    <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#Concept"/>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#Catalog -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/dcat#Catalog"/>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#Dataset -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/dcat#Dataset"/>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#Distribution -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/dcat#Distribution"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Agent -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Agent"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Organization -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Organization">
+        <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
