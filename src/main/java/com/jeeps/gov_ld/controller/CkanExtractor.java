@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class CkanExtractor {
 
-    public static final int MAX_SIZE = 2;
+    public static final int MAX_SIZE = 300;
     private Gson mGson;
     private MysqlDatabase mDatabase;
     private SemanticCreator mSemanticCreator;
@@ -121,7 +121,10 @@ public class CkanExtractor {
         JsonArray transformedGroups = orgToGson(groups);
 
         JSONArray tags = resultJson.getJSONArray("tags");
-        JsonArray transformedTags = orgToGson(tags);
+        JsonArray transformedTags = new JsonArray();
+        try {
+            transformedTags = orgToGson(tags);
+        } catch (NullPointerException e) {}
 
         JSONObject organization = resultJson.getJSONObject("organization");
         JsonObject transformedOrg = new JsonObject();

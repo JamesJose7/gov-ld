@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.GeneralSecurityException;
+import java.util.concurrent.CompletionException;
 import java.util.function.Consumer;
 
 public class HttpService {
@@ -26,10 +27,14 @@ public class HttpService {
     public void sendRequest(Consumer<String> onSuccess, String url) {
         HttpRequest request = HttpRequest.newBuilder(URI.create(url)).build();
 
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .thenAccept(onSuccess)
-                .join();
+        try {
+            client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .thenApply(HttpResponse::body)
+                    .thenAccept(onSuccess)
+                    .join();
+        } catch (CompletionException e) {
+            System.out.println("NO DATASET");
+        }
     }
 
     public void sendPostRequest(Consumer<String> onSuccess, String url, String body) {
